@@ -1,4 +1,4 @@
-import pool from "../index.js";
+import pool from '../index.js';
 
 await pool.query(
   `CREATE TABLE IF NOT EXISTS profile (userID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, email TEXT, slackUsername TEXT);`

@@ -1,8 +1,8 @@
-import pool from "../index.js";
+import pool from '../index.js';
 
 async function deleteAllTables() {
   await pool.query(
-    `DROP TABLE [IF EXISTS] profile, notes, help, resource, topic`
+    `DROP TABLE IF EXISTS profile, notes, help, resource, topic`
   );
 }
 
