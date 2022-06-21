@@ -193,3 +193,5 @@ router.delete('/:id', async function (req, res) {
 router.get('/', async function (req, res) {
   const profileData = req.params.id;
 });
+
+export default router;
