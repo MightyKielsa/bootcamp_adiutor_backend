@@ -1,5 +1,7 @@
 import pool from "../index.js";
 
+//PASS THE DATA AS ARRAY AS ARGUMENT INTO THE FUNCTIONS AT THE BOTOM OF THE DOCUMENT TO POPULATE THE TABLES
+
 async function populateProfileTable(dataArr) {
   for (let i = 0; i < dataArr.length; i++) {
     const res = await pool.query(
@@ -69,3 +71,9 @@ async function populateTopicTable(dataArr) {
     console.log(res.rows[0].link);
   }
 }
+
+populateProfileTable(/* PROFILE DATA GOES HERE */);
+populateNotesTable(/* NOTES DATA GOES HERE */);
+populateHelpTable(/* HELP DATA GOES HERE */);
+populateResourceTable(/* RESOURCE DATA GOES HERE */);
+populateTopicTable(/* TOPIC DATA GOES HERE */);
