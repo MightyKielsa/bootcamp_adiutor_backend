@@ -13,7 +13,7 @@ await pool.query(
 );
 
 await pool.query(
-  'Create table if not exists resource (resourceID int primary key generated always as identity,userID int, topicID int, tags text [])'
+  'Create table if not exists resource (resourceID int primary key generated always as identity,userID int, topicID int, tags text [], link text, rating numeric)'
 );
 
 await pool.query(
