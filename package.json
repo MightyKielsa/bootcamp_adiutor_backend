@@ -7,7 +7,11 @@
   "devDependencies": {},
   "scripts": {
     "dev": "nodemon app.js",
-    "create": "node -r dotenv/config ./db/scripts/createTable.js"
+    "create": "node -r dotenv/config ./db/scripts/createTable.js",
+    "db:createTable": "node -r dotenv/config ./db/scripts/createTable.js",
+    "db:populateTable": "node -r dotenv/config ./db/scripts/populateTable.js",
+    "db:deleteTable": "node -r dotenv/config ./db/scripts/deleteTable.js",
+    "db:deleteAllTables": "node -r dotenv/config ./db/scripts/deleteAllTables.js"
   },
   "repository": {
     "type": "git",
