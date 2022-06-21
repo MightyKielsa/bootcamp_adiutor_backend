@@ -17,10 +17,13 @@ import {
   updateProfileByUserId,
   deleteProfileByUserId,
   getResourceByTopic,
+  getHelpByTopic,
 } from '../models/models.js';
 
 // BASIC APP FUNCTIONALITY ROUTES:
-
+router.get('/', (req, res) => {
+  res.json('Base path not in use');
+});
 // Router to get all users
 router.get('/users', async function (req, res) {
   const allUsers = await getProfiles();
@@ -137,6 +140,17 @@ router.get('/topic?key=value', async function (req, res) {
 // ROUTES TO DECIDE WHETHER TO IMPLEMENT:
 
 router.get('/help', async function (req, res) {
+  console.log(req.query.topic);
+  if (req.query.topic !== undefined) {
+    const someHelp = await getHelpByTopic(req.query.topic);
+    const responseObject = {
+      success: true,
+      message: 'Here is everyone who is willing to help',
+      data: someHelp,
+    };
+    return res.json(responseObject);
+  }
+  console.log('no topic given');
   const allHelp = await getHelp();
   const responseObject = {
     success: true,
@@ -156,6 +170,15 @@ router.get('/help/:id', async function (req, res) {
   res.json(responseObject);
 });
 
+router.get('/help/topic', async function (req, res) {
+  const help = await getHelpByHelpID(req.params.id);
+  const responseObject = {
+    success: true,
+    message: 'Here is the helpful user you searched for',
+    data: help,
+  };
+  res.json(responseObject);
+});
 router.get('/resource', async function (req, res) {
   const allResources = await getResource();
   const responseObject = {

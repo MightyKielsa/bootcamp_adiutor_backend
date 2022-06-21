@@ -40,6 +40,14 @@ export async function getHelpByHelpID(id) {
   return res.rows;
 }
 
+export async function getHelpByTopic(topic) {
+  const res = await pool.query(
+    `SELECT profile.slackUsername FROM help JOIN topic on help.topicID = topic.topicID join profile on profile.userID=help.userID WHERE topic.topic = $1;`,
+    [topic]
+  );
+  return res.rows;
+}
+
 export async function getResource() {
   const res = await pool.query(`SELECT * FROM resource;`);
   return res.rows;
