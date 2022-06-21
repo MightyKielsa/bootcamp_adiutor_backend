@@ -1,0 +1,29 @@
+{
+  "name": "w9_backend-project-chris-angels",
+  "description": "For your project, you’ll be using what you’ve learned on the course so far to try and improve the lives of your users. In this case, the users will be close to home: bootcampers!",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "devDependencies": {},
+  "scripts": {
+    "dev": "nodemon app.js",
+    "create": "node -r dotenv/config ./db/scripts/createTable.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SchoolOfCode/w9_backend-project-chris-angels.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SchoolOfCode/w9_backend-project-chris-angels/issues"
+  },
+  "homepage": "https://github.com/SchoolOfCode/w9_backend-project-chris-angels#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16",
+    "pg": "^8.7.3"
+  }
+}
