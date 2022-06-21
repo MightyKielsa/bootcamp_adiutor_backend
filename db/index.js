@@ -1,4 +1,4 @@
-import pg from 'pg';
+import pg from "pg";
 
 export default new pg.Pool({
   user: process.env.PGUSER,

@@ -189,3 +189,8 @@ router.delete("/:id", async function (req, res) {
     };
     res.json(responseObject);
 });
+
+router.get("/", async function (req, res) {
+    const profileData = req.params.id
+})
+
