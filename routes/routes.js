@@ -16,6 +16,7 @@ import {
   createProfile,
   updateProfileByUserId,
   deleteProfileByUserId,
+  getResourceByTopic,
 } from '../models/models.js';
 
 // BASIC APP FUNCTIONALITY ROUTES:
@@ -87,6 +88,16 @@ router.get('/resource?key=value', async function (req, res) {
     };
     res.json(responseObject);
   }
+});
+
+router.get('/resource/:id', async function (req, res) {
+  const searchedResource = await getResourceByTopic(req.params.id);
+  const responseObject = {
+    success: true,
+    message: 'Resources matching your searched term',
+    data: searchedResource,
+  };
+  res.json(responseObject);
 });
 
 router.get('/topic', async function (req, res) {

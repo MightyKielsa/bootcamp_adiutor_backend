@@ -51,6 +51,12 @@ export async function getResourceByTag(searchTerm) {
     [searchTerm]
   );
 }
+export async function getResourceByTopic(topicNum) {
+  const res = await pool.query(`SELECT * FROM resource where topicID=$1;`, [
+    topicNum,
+  ]);
+  return res.rows;
+}
 
 export async function getTopic() {
   const res = await pool.query(`SELECT * FROM topic;`);
