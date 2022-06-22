@@ -21,6 +21,7 @@ import {
   getNotesbyEmail,
   getResourceByTagRating,
   getResourceByTopicRating,
+  getProfileByEmail,
 } from '../models/models.js';
 
 // BASIC APP FUNCTIONALITY ROUTES:
@@ -29,6 +30,15 @@ router.get('/', (req, res) => {
 });
 // Router to get all users
 router.get('/users', async function (req, res) {
+  if (req.query.email !== undefined) {
+    const user = await getProfileByEmail(req.query.email);
+    const responseObject = {
+      success: true,
+      message: 'All users',
+      data: user,
+    };
+    return res.json(responseObject);
+  }
   const allUsers = await getProfiles();
   const responseObject = {
     success: true,
