@@ -66,12 +66,14 @@ export async function getResource() {
   const res = await pool.query(`SELECT * FROM resource;`);
   return res.rows;
 }
-// Need to double check the SQL syntax to see if this is correct
+// This assumes that the tags in the database are all lowercase.
 export async function getResourceByTag(searchTerm) {
+  console.log(searchTerm);
   const res = await pool.query(
-    `SELECT * FROM resource WHERE LOWER(tags) LIKE LOWER('%' || $1 || '%');`,
+    `SELECT * FROM resource WHERE LOWER($1)=ANY(tags);`,
     [searchTerm]
   );
+  return res.rows;
 }
 export async function getResourceByTopic(topicNum) {
   const res = await pool.query(`SELECT * FROM resource where topicID=$1;`, [

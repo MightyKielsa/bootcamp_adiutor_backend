@@ -90,7 +90,7 @@ router.get('/notes/:id', async function (req, res) {
 // });
 
 // Need to figure out how to connect the searched tag to the notes URL path (Use this website for guidance - https://reactgo.com/react-router-query-params/#:~:text=To%20access%20the%20query%20params%20from%20a%20url%2C,above%20examples%20we%20have%20used%20the%20URLSearchParams%20interface.)
-router.get('/resource?key=value', async function (req, res) {
+router.get('/resource', async function (req, res) {
   const searchTerm = req.query.tags;
   if (searchTerm !== undefined) {
     const searchedResource = await getResourceByTag(searchTerm);
@@ -99,8 +99,15 @@ router.get('/resource?key=value', async function (req, res) {
       message: 'Resources matching your searched term',
       data: searchedResource,
     };
-    res.json(responseObject);
+    return res.json(responseObject);
   }
+  const searchedResource = await getResource();
+  const responseObject = {
+    success: true,
+    message: 'All Resources',
+    data: searchedResource,
+  };
+  res.json(responseObject);
 });
 
 router.get('/resource/:id', async function (req, res) {
