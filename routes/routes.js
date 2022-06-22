@@ -19,6 +19,8 @@ import {
   getResourceByTopic,
   getHelpByTopic,
   getNotesbyEmail,
+  getResourceByTagRating,
+  getResourceByTopicRating,
 } from '../models/models.js';
 
 // BASIC APP FUNCTIONALITY ROUTES:
@@ -93,6 +95,19 @@ router.get('/notes/:id', async function (req, res) {
 router.get('/resource', async function (req, res) {
   const searchTerm = req.query.tags;
   if (searchTerm !== undefined) {
+    if (req.query.rating !== undefined) {
+      console.log('resource by rating and tag');
+      const searchedResource = await getResourceByTagRating(
+        searchTerm,
+        Number(req.query.rating)
+      );
+      const responseObject = {
+        success: true,
+        message: 'Resources matching your searched term listed by rating',
+        data: searchedResource,
+      };
+      return res.json(responseObject);
+    }
     const searchedResource = await getResourceByTag(searchTerm);
     const responseObject = {
       success: true,
@@ -111,10 +126,23 @@ router.get('/resource', async function (req, res) {
 });
 
 router.get('/resource/:id', async function (req, res) {
+  if (req.query.rating !== undefined) {
+    console.log('resource by topic rating');
+    const searchedResource = await getResourceByTopicRating(
+      req.params.id,
+      Number(req.query.rating)
+    );
+    const responseObject = {
+      success: true,
+      message: 'Resources matching your searched term (topic) listed by rating',
+      data: searchedResource,
+    };
+    return res.json(responseObject);
+  }
   const searchedResource = await getResourceByTopic(req.params.id);
   const responseObject = {
     success: true,
-    message: 'Resources matching your searched term',
+    message: 'Resources matching your searched term (topic)',
     data: searchedResource,
   };
   res.json(responseObject);

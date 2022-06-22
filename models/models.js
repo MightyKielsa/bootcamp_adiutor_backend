@@ -75,10 +75,26 @@ export async function getResourceByTag(searchTerm) {
   );
   return res.rows;
 }
+// This assumes that the tags in the database are all lowercase.
+export async function getResourceByTagRating(searchTerm, rating) {
+  console.log(searchTerm);
+  const res = await pool.query(
+    `SELECT * FROM resource WHERE LOWER($1)=ANY(tags) AND rating >= $2 order by rating desc;`,
+    [searchTerm, rating]
+  );
+  return res.rows;
+}
 export async function getResourceByTopic(topicNum) {
   const res = await pool.query(`SELECT * FROM resource where topicID=$1;`, [
     topicNum,
   ]);
+  return res.rows;
+}
+export async function getResourceByTopicRating(topicNum, rating) {
+  const res = await pool.query(
+    `SELECT * FROM resource where topicID=$1 AND rating>=$2 order by rating desc;`,
+    [topicNum, rating]
+  );
   return res.rows;
 }
 
@@ -94,7 +110,7 @@ export async function getTopicById(id) {
 // Need to double check the SQL syntax to see if this is correct
 export async function getTopicByTag(searchTerm) {
   const res = await pool.query(
-    `SELECT *FROM topic WHERE LOWER(tags) LIKE LOWER('%' || $1 || '%');`,
+    `SELECT * FROM topic WHERE WHERE LOWER($1)=ANY(tags);`,
     [searchTerm]
   );
   return res.rows;
