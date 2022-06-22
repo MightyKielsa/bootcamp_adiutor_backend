@@ -162,7 +162,7 @@ export async function makeNote(email, body) {
 }
 export async function getNewestNote(email) {
   const res = await pool.query(
-    `SELECT week, day from profile join notes on profile.userID=notes.userID where email=$1 order by week asc limit 1;`,
+    `SELECT week, day from profile join notes on profile.userID=notes.userID where email=$1 order by week desc limit 1;`,
     [email]
   );
   return res.rows;
