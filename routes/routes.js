@@ -22,6 +22,7 @@ import {
   getResourceByTagRating,
   getResourceByTopicRating,
   getProfileByEmail,
+  updateProfileByUserEmail,
 } from '../models/models.js';
 
 // BASIC APP FUNCTIONALITY ROUTES:
@@ -267,6 +268,22 @@ router.put('/:id', async function (req, res) {
     data: updatedUser,
   };
   res.json(responseObject);
+});
+router.patch('/users', async function (req, res) {
+  if (req.query.email !== undefined) {
+    console.log(req.body);
+    const updatedUser = await updateProfileByUserEmail(
+      req.query.email,
+      req.body.slackUsername
+    );
+    const responseObject = {
+      success: true,
+      message: 'Updated user details successfully',
+      data: updatedUser,
+    };
+    return res.json(responseObject);
+  }
+  res.json('failed to update');
 });
 
 // Delete a user by id

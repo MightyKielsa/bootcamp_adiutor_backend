@@ -137,6 +137,16 @@ export async function updateProfileByUserId(id, updatedProfile) {
   );
   return res.rows;
 }
+export async function updateProfileByUserEmail(email, username) {
+  const res = await pool.query(
+    `UPDATE profile SET
+            slackUsername = $1
+        WHERE email = $2 RETURNING *;`,
+    [username, email]
+  );
+  return res.rows;
+}
+
 // Need to double check the SQL syntax to see if this is correct
 export async function deleteProfileByUserId(id) {
   const res = await pool.query(
