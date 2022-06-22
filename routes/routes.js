@@ -34,7 +34,7 @@ router.get('/users', async function (req, res) {
     const user = await getProfileByEmail(req.query.email);
     const responseObject = {
       success: true,
-      message: 'All users',
+      message: 'user by email',
       data: user,
     };
     return res.json(responseObject);
@@ -248,6 +248,7 @@ router.get('/resource', async function (req, res) {
 
 // Create a new user
 router.post('/users', async function (req, res) {
+  console.log('/users post ran');
   const newUser = await createProfile(req.body);
   const responseObject = {
     success: true,
