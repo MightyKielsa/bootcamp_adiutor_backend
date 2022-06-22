@@ -17,10 +17,16 @@ import {
   updateProfileByUserId,
   deleteProfileByUserId,
   getResourceByTopic,
+  getHelpByTopic,
+  getNotesbyEmail,
+  getResourceByTagRating,
+  getResourceByTopicRating,
 } from '../models/models.js';
 
 // BASIC APP FUNCTIONALITY ROUTES:
-
+router.get('/', (req, res) => {
+  res.json('Base path not in use');
+});
 // Router to get all users
 router.get('/users', async function (req, res) {
   const allUsers = await getProfiles();
@@ -43,6 +49,15 @@ router.get('/users/:id', async function (req, res) {
 });
 
 router.get('/notes', async function (req, res) {
+  if (req.query.email !== undefined) {
+    const someNotes = await getNotesbyEmail(req.query.email);
+    const responseObject = {
+      success: true,
+      messgae: 'All notes',
+      data: someNotes,
+    };
+    return res.json(responseObject);
+  }
   const allNotes = await getNotes();
   const responseObject = {
     success: true,
@@ -63,38 +78,71 @@ router.get('/notes/:id', async function (req, res) {
 });
 
 // Need to figure out how to connect the searched tag to the notes URL path (Use this website for guidance - https://reactgo.com/react-router-query-params/#:~:text=To%20access%20the%20query%20params%20from%20a%20url%2C,above%20examples%20we%20have%20used%20the%20URLSearchParams%20interface.)
-router.get('/notes?key=value', async function (req, res) {
-  const searchTerm = req.query.tags;
-  if (searchTerm !== undefined) {
-    const searchedNote = await getNotesByTag(searchTerm);
-    const responseObject = {
-      success: true,
-      message: 'Notes matching your search term',
-      data: searchedNote,
-    };
-    res.json(responseObject);
-  }
-});
+// router.get('/notes', async function (req, res) {
+//   const searchTerm = req.query.tags;
+//   if (searchTerm !== undefined) {
+//     const searchedNote = await getNotesByTag(searchTerm);
+//     const responseObject = {
+//       success: true,
+//       message: 'Notes matching your search term',
+//       data: searchedNote,
+//     };
+//     res.json(responseObject);
+//   }
+// });
 
 // Need to figure out how to connect the searched tag to the notes URL path (Use this website for guidance - https://reactgo.com/react-router-query-params/#:~:text=To%20access%20the%20query%20params%20from%20a%20url%2C,above%20examples%20we%20have%20used%20the%20URLSearchParams%20interface.)
-router.get('/resource?key=value', async function (req, res) {
+router.get('/resource', async function (req, res) {
   const searchTerm = req.query.tags;
   if (searchTerm !== undefined) {
+    if (req.query.rating !== undefined) {
+      console.log('resource by rating and tag');
+      const searchedResource = await getResourceByTagRating(
+        searchTerm,
+        Number(req.query.rating)
+      );
+      const responseObject = {
+        success: true,
+        message: 'Resources matching your searched term listed by rating',
+        data: searchedResource,
+      };
+      return res.json(responseObject);
+    }
     const searchedResource = await getResourceByTag(searchTerm);
     const responseObject = {
       success: true,
       message: 'Resources matching your searched term',
       data: searchedResource,
     };
-    res.json(responseObject);
+    return res.json(responseObject);
   }
+  const searchedResource = await getResource();
+  const responseObject = {
+    success: true,
+    message: 'All Resources',
+    data: searchedResource,
+  };
+  res.json(responseObject);
 });
 
 router.get('/resource/:id', async function (req, res) {
+  if (req.query.rating !== undefined) {
+    console.log('resource by topic rating');
+    const searchedResource = await getResourceByTopicRating(
+      req.params.id,
+      Number(req.query.rating)
+    );
+    const responseObject = {
+      success: true,
+      message: 'Resources matching your searched term (topic) listed by rating',
+      data: searchedResource,
+    };
+    return res.json(responseObject);
+  }
   const searchedResource = await getResourceByTopic(req.params.id);
   const responseObject = {
     success: true,
-    message: 'Resources matching your searched term',
+    message: 'Resources matching your searched term (topic)',
     data: searchedResource,
   };
   res.json(responseObject);
@@ -137,6 +185,17 @@ router.get('/topic?key=value', async function (req, res) {
 // ROUTES TO DECIDE WHETHER TO IMPLEMENT:
 
 router.get('/help', async function (req, res) {
+  console.log(req.query.topic);
+  if (req.query.topic !== undefined) {
+    const someHelp = await getHelpByTopic(req.query.topic);
+    const responseObject = {
+      success: true,
+      message: 'Here is everyone who is willing to help',
+      data: someHelp,
+    };
+    return res.json(responseObject);
+  }
+  console.log('no topic given');
   const allHelp = await getHelp();
   const responseObject = {
     success: true,
@@ -156,6 +215,15 @@ router.get('/help/:id', async function (req, res) {
   res.json(responseObject);
 });
 
+router.get('/help/topic', async function (req, res) {
+  const help = await getHelpByHelpID(req.params.id);
+  const responseObject = {
+    success: true,
+    message: 'Here is the helpful user you searched for',
+    data: help,
+  };
+  res.json(responseObject);
+});
 router.get('/resource', async function (req, res) {
   const allResources = await getResource();
   const responseObject = {

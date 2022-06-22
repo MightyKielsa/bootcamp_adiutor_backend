@@ -11,9 +11,23 @@ export async function getProfileByUserId(id) {
   ]);
   return res.rows;
 }
-
+export async function getProfileByEmail(email) {
+  const res = await pool.query(`SELECT * FROM profile WHERE email = $1;`, [
+    email,
+  ]);
+  return res.rows;
+}
 export async function getNotes() {
   const res = await pool.query(`SELECT * FROM notes;`);
+  return res.rows;
+}
+
+export async function getNotesbyEmail(email) {
+  console.log(email);
+  const res = await pool.query(
+    `SELECT slackUsername, week, day, tags, note from notes join profile on notes.userID=profile.userID where email=$1;`,
+    [email]
+  );
   return res.rows;
 }
 
@@ -40,21 +54,47 @@ export async function getHelpByHelpID(id) {
   return res.rows;
 }
 
+export async function getHelpByTopic(topic) {
+  const res = await pool.query(
+    `SELECT profile.slackUsername FROM help JOIN topic on help.topicID = topic.topicID join profile on profile.userID=help.userID WHERE topic.topic = $1;`,
+    [topic]
+  );
+  return res.rows;
+}
+
 export async function getResource() {
   const res = await pool.query(`SELECT * FROM resource;`);
   return res.rows;
 }
-// Need to double check the SQL syntax to see if this is correct
+// This assumes that the tags in the database are all lowercase.
 export async function getResourceByTag(searchTerm) {
+  console.log(searchTerm);
   const res = await pool.query(
-    `SELECT * FROM resource WHERE LOWER(tags) LIKE LOWER('%' || $1 || '%');`,
+    `SELECT * FROM resource WHERE LOWER($1)=ANY(tags);`,
     [searchTerm]
   );
+  return res.rows;
+}
+// This assumes that the tags in the database are all lowercase.
+export async function getResourceByTagRating(searchTerm, rating) {
+  console.log(searchTerm);
+  const res = await pool.query(
+    `SELECT * FROM resource WHERE LOWER($1)=ANY(tags) AND rating >= $2 order by rating desc;`,
+    [searchTerm, rating]
+  );
+  return res.rows;
 }
 export async function getResourceByTopic(topicNum) {
   const res = await pool.query(`SELECT * FROM resource where topicID=$1;`, [
     topicNum,
   ]);
+  return res.rows;
+}
+export async function getResourceByTopicRating(topicNum, rating) {
+  const res = await pool.query(
+    `SELECT * FROM resource where topicID=$1 AND rating>=$2 order by rating desc;`,
+    [topicNum, rating]
+  );
   return res.rows;
 }
 
@@ -70,7 +110,7 @@ export async function getTopicById(id) {
 // Need to double check the SQL syntax to see if this is correct
 export async function getTopicByTag(searchTerm) {
   const res = await pool.query(
-    `SELECT *FROM topic WHERE LOWER(tags) LIKE LOWER('%' || $1 || '%');`,
+    `SELECT * FROM topic WHERE WHERE LOWER($1)=ANY(tags);`,
     [searchTerm]
   );
   return res.rows;
