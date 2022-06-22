@@ -120,10 +120,10 @@ export async function getTopicByTag(searchTerm) {
 
 // Need to double check the SQL syntax to see if this is correct
 export async function createProfile(newProfile) {
+  console.log('create profile called', newProfile);
   const res = await pool.query(
-    `INSERT INTO profile (userID, email, slackUsername) VALUES ($1, $2, $3) RETURNING *;`[
-      (newProfile.userID, newProfile.email, newProfile.slackUsername)
-    ]
+    `INSERT INTO profile (email, slackUsername) VALUES ($1, $2) RETURNING *;`,
+    [newProfile.email, newProfile.slackUsername]
   );
   return res.rows;
 }
