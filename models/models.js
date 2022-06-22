@@ -146,7 +146,13 @@ export async function updateProfileByUserEmail(email, username) {
   );
   return res.rows;
 }
-
+export async function getNewestNote(email) {
+  const res = await pool.query(
+    `SELECT week, day from profile join notes on profile.userID=notes.userID where email=$1 order by week asc limit 1;`,
+    [email]
+  );
+  return res.rows;
+}
 // Need to double check the SQL syntax to see if this is correct
 export async function deleteProfileByUserId(id) {
   const res = await pool.query(

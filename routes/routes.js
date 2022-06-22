@@ -7,6 +7,7 @@ import {
   getNotesByNotesID,
   getNotesByTag,
   getHelp,
+  getNewestNote,
   getHelpByHelpID,
   getResource,
   getResourceByTag,
@@ -88,6 +89,18 @@ router.get('/notes/:id', async function (req, res) {
   res.json(responseObject);
 });
 
+router.get('/recent', async function (req, res) {
+  if (req.query.email) {
+    const note = await getNewestNote(req.query.email);
+    const responseObject = {
+      success: true,
+      message: 'Here is the newest note',
+      data: note,
+    };
+    return res.json(responseObject);
+  }
+  res.json('Failed to get most recent note');
+});
 // Need to figure out how to connect the searched tag to the notes URL path (Use this website for guidance - https://reactgo.com/react-router-query-params/#:~:text=To%20access%20the%20query%20params%20from%20a%20url%2C,above%20examples%20we%20have%20used%20the%20URLSearchParams%20interface.)
 // router.get('/notes', async function (req, res) {
 //   const searchTerm = req.query.tags;
