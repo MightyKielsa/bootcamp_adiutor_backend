@@ -146,6 +146,20 @@ export async function updateProfileByUserEmail(email, username) {
   );
   return res.rows;
 }
+export async function makeNote(email, body) {
+  const idres = await pool.query('Select userID from profile where email=$1', [
+    email,
+  ]);
+  let id = idres.rows[0].userid;
+  console.log('id is', id);
+  console.log(body);
+  const res = await pool.query(
+    'INSERT into notes (userID,week,day,tags,note) VALUES ($1,$2,$3,$4,$5)',
+    [id, body.week, body.day, body.tags, body.note]
+  );
+
+  return res.rows;
+}
 export async function getNewestNote(email) {
   const res = await pool.query(
     `SELECT week, day from profile join notes on profile.userID=notes.userID where email=$1 order by week asc limit 1;`,

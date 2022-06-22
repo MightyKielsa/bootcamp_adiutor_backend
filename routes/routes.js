@@ -24,6 +24,7 @@ import {
   getResourceByTopicRating,
   getProfileByEmail,
   updateProfileByUserEmail,
+  makeNote,
 } from '../models/models.js';
 
 // BASIC APP FUNCTIONALITY ROUTES:
@@ -87,6 +88,19 @@ router.get('/notes/:id', async function (req, res) {
     data: note,
   };
   res.json(responseObject);
+});
+
+router.post('/notes', async function (req, res) {
+  if (req.query.email !== undefined) {
+    const newNote = await makeNote(req.query.email, req.body);
+    const responseObject = {
+      success: true,
+      message: 'Here is the note you searched for',
+      data: newNote,
+    };
+    return res.json(responseObject);
+  }
+  res.json('failed to post new note');
 });
 
 router.get('/recent', async function (req, res) {
