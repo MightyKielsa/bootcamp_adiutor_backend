@@ -11,9 +11,23 @@ export async function getProfileByUserId(id) {
   ]);
   return res.rows;
 }
-
+export async function getProfileByEmail(email) {
+  const res = await pool.query(`SELECT * FROM profile WHERE email = $1;`, [
+    email,
+  ]);
+  return res.rows;
+}
 export async function getNotes() {
   const res = await pool.query(`SELECT * FROM notes;`);
+  return res.rows;
+}
+
+export async function getNotesbyEmail(email) {
+  console.log(email);
+  const res = await pool.query(
+    `SELECT slackUsername, week, day, tags, note from notes join profile on notes.userID=profile.userID where email=$1;`,
+    [email]
+  );
   return res.rows;
 }
 

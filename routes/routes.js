@@ -18,6 +18,7 @@ import {
   deleteProfileByUserId,
   getResourceByTopic,
   getHelpByTopic,
+  getNotesbyEmail,
 } from '../models/models.js';
 
 // BASIC APP FUNCTIONALITY ROUTES:
@@ -46,6 +47,15 @@ router.get('/users/:id', async function (req, res) {
 });
 
 router.get('/notes', async function (req, res) {
+  if (req.query.email !== undefined) {
+    const someNotes = await getNotesbyEmail(req.query.email);
+    const responseObject = {
+      success: true,
+      messgae: 'All notes',
+      data: someNotes,
+    };
+    return res.json(responseObject);
+  }
   const allNotes = await getNotes();
   const responseObject = {
     success: true,
@@ -66,18 +76,18 @@ router.get('/notes/:id', async function (req, res) {
 });
 
 // Need to figure out how to connect the searched tag to the notes URL path (Use this website for guidance - https://reactgo.com/react-router-query-params/#:~:text=To%20access%20the%20query%20params%20from%20a%20url%2C,above%20examples%20we%20have%20used%20the%20URLSearchParams%20interface.)
-router.get('/notes?key=value', async function (req, res) {
-  const searchTerm = req.query.tags;
-  if (searchTerm !== undefined) {
-    const searchedNote = await getNotesByTag(searchTerm);
-    const responseObject = {
-      success: true,
-      message: 'Notes matching your search term',
-      data: searchedNote,
-    };
-    res.json(responseObject);
-  }
-});
+// router.get('/notes', async function (req, res) {
+//   const searchTerm = req.query.tags;
+//   if (searchTerm !== undefined) {
+//     const searchedNote = await getNotesByTag(searchTerm);
+//     const responseObject = {
+//       success: true,
+//       message: 'Notes matching your search term',
+//       data: searchedNote,
+//     };
+//     res.json(responseObject);
+//   }
+// });
 
 // Need to figure out how to connect the searched tag to the notes URL path (Use this website for guidance - https://reactgo.com/react-router-query-params/#:~:text=To%20access%20the%20query%20params%20from%20a%20url%2C,above%20examples%20we%20have%20used%20the%20URLSearchParams%20interface.)
 router.get('/resource?key=value', async function (req, res) {
