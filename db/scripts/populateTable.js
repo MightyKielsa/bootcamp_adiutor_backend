@@ -26,8 +26,17 @@ async function populateNotesTable(dataArr) {
         dataArr[i].week,
         dataArr[i].day,
         dataArr[i].tags,
-        dataArr.note,
+        dataArr[i].note,
       ]
+    );
+    console.log(res.rows[0].note);
+  }
+}
+async function populateNotesTableFIX(dataArr) {
+  for (let i = 0; i < dataArr.length; i++) {
+    const res = await pool.query(
+      `UPDATE notes SET note=$1 where userID=$2 RETURNING *;`,
+      [dataArr[i].note, dataArr[i].userID]
     );
     console.log(res.rows[0].note);
   }
@@ -69,8 +78,10 @@ async function populateTopicTable(dataArr) {
   }
 }
 
-populateProfileTable(profile);
-populateNotesTable(notes);
-populateHelpTable(help);
-populateResourceTable(resource);
-populateTopicTable(topic);
+// populateProfileTable(profile);
+// populateNotesTable(notes);
+// populateHelpTable(help);
+// populateResourceTable(resource);
+// populateTopicTable(topic);
+
+// populateNotesTableFIX(notes);

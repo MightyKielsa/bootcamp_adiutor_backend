@@ -298,7 +298,7 @@ router.put('/:id', async function (req, res) {
 });
 router.patch('/users', async function (req, res) {
   if (req.query.email !== undefined) {
-    console.log(req.body);
+    // console.log(req.body);
     const updatedUser = await updateProfileByUserEmail(
       req.query.email,
       req.body.slackUsername
