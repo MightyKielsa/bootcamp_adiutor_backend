@@ -15,3 +15,5 @@ app.get('/users/:id', (req, res) => {
   //pool.query('Select * from notes join profile on notes.userID=profile.userID')
   res.json({ sucess: true, payload: 'you wish' });
 });
+
+export default app;
