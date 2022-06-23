@@ -171,7 +171,7 @@ export async function deleteProfileByUserId(id) {
 }
 
 export async function createResource(newResource) {
-  console.log("create profile called", newResource);
+  console.log("create resource called", newResource);
   const res = await pool.query(
     `INSERT INTO resource (userID, topicID, tags, link, rating) VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
     [
