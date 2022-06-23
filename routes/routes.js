@@ -134,7 +134,6 @@ router.get('/resource', async function (req, res) {
   const searchTerm = req.query.tags;
   if (searchTerm !== undefined) {
     if (req.query.rating !== undefined) {
-      console.log('resource by rating and tag');
       const searchedResource = await getResourceByTagRating(
         searchTerm,
         Number(req.query.rating)
@@ -165,7 +164,6 @@ router.get('/resource', async function (req, res) {
 
 router.get('/resource/:id', async function (req, res) {
   if (req.query.rating !== undefined) {
-    console.log('resource by topic rating');
     const searchedResource = await getResourceByTopicRating(
       req.params.id,
       Number(req.query.rating)
@@ -223,7 +221,6 @@ router.get('/topic?key=value', async function (req, res) {
 // ROUTES TO DECIDE WHETHER TO IMPLEMENT:
 
 router.get('/help', async function (req, res) {
-  console.log(req.query.topic);
   if (req.query.topic !== undefined) {
     const someHelp = await getHelpByTopic(req.query.topic);
     const responseObject = {
@@ -233,7 +230,6 @@ router.get('/help', async function (req, res) {
     };
     return res.json(responseObject);
   }
-  console.log('no topic given');
   const allHelp = await getHelp();
   const responseObject = {
     success: true,
@@ -276,7 +272,6 @@ router.get('/resource', async function (req, res) {
 
 // Create a new user
 router.post('/users', async function (req, res) {
-  console.log('/users post ran');
   const newUser = await createProfile(req.body);
   const responseObject = {
     success: true,
@@ -298,7 +293,6 @@ router.put('/:id', async function (req, res) {
 });
 router.patch('/users', async function (req, res) {
   if (req.query.email !== undefined) {
-    // console.log(req.body);
     const updatedUser = await updateProfileByUserEmail(
       req.query.email,
       req.body.slackUsername

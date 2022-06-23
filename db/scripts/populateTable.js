@@ -79,8 +79,8 @@ async function populateTopicTable(dataArr) {
 }
 
 // populateProfileTable(profile);
-// populateNotesTable(notes);
-// populateHelpTable(help);
+populateNotesTable(notes);
+populateHelpTable(help);
 // populateResourceTable(resource);
 // populateTopicTable(topic);
 

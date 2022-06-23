@@ -23,7 +23,6 @@ export async function getNotes() {
 }
 
 export async function getNotesbyEmail(email) {
-  console.log(email);
   const res = await pool.query(
     `SELECT slackUsername, week, day, tags, note from notes join profile on notes.userID=profile.userID where email=$1;`,
     [email]
@@ -68,7 +67,6 @@ export async function getResource() {
 }
 // This assumes that the tags in the database are all lowercase.
 export async function getResourceByTag(searchTerm) {
-  console.log(searchTerm);
   const res = await pool.query(
     `SELECT * FROM resource WHERE LOWER($1)=ANY(tags);`,
     [searchTerm]
@@ -77,7 +75,6 @@ export async function getResourceByTag(searchTerm) {
 }
 // This assumes that the tags in the database are all lowercase.
 export async function getResourceByTagRating(searchTerm, rating) {
-  console.log(searchTerm);
   const res = await pool.query(
     `SELECT * FROM resource WHERE LOWER($1)=ANY(tags) AND rating >= $2 order by rating desc;`,
     [searchTerm, rating]
@@ -120,7 +117,6 @@ export async function getTopicByTag(searchTerm) {
 
 // Need to double check the SQL syntax to see if this is correct
 export async function createProfile(newProfile) {
-  console.log('create profile called', newProfile);
   const res = await pool.query(
     `INSERT INTO profile (email, slackUsername) VALUES ($1, $2) RETURNING *;`,
     [newProfile.email, newProfile.slackUsername]
@@ -151,8 +147,6 @@ export async function makeNote(email, body) {
     email,
   ]);
   let id = idres.rows[0].userid;
-  console.log('id is', id);
-  console.log(body);
   const res = await pool.query(
     'INSERT into notes (userID,week,day,tags,note) VALUES ($1,$2,$3,$4,$5)',
     [id, body.week, body.day, body.tags, body.note]
