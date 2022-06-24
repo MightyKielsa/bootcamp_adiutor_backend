@@ -26,6 +26,7 @@ import {
   updateProfileByUserEmail,
   makeNote,
   createResource,
+  newHelper,
 } from '../models/models.js';
 
 // BASIC APP FUNCTIONALITY ROUTES:
@@ -251,6 +252,16 @@ router.get('/help/:id', async function (req, res) {
 
 router.get('/help/topic', async function (req, res) {
   const help = await getHelpByHelpID(req.params.id);
+  const responseObject = {
+    success: true,
+    message: 'Here is the helpful user you searched for',
+    data: help,
+  };
+  res.json(responseObject);
+});
+
+router.post('/help', async function (req, res) {
+  const help = await newHelper(req.query.email, req.body);
   const responseObject = {
     success: true,
     message: 'Here is the helpful user you searched for',

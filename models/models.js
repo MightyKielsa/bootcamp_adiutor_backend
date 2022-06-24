@@ -121,6 +121,19 @@ export async function getTopicByTag(searchTerm) {
   );
   return res.rows;
 }
+export async function newHelper(email, body) {
+  console.log(body);
+  const res1 = await pool.query('select userID from profile where email=$1', [
+    email,
+  ]);
+  let id = res1.rows[0].userid;
+  console.log(id);
+  const res = await pool.query(
+    'insert into help (userID, topicID) values ($1,$2) returning *;',
+    [id, body.topicID]
+  );
+  return res.rows;
+}
 
 // Need to double check if we need the below models or not - Delete if needed from models & routers
 
