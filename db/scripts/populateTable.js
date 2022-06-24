@@ -5,7 +5,6 @@ import { profile } from '../../libs/profile.js';
 import { resource } from '../../libs/resource.js';
 import { topic } from '../../libs/topic.js';
 //PASS THE DATA AS ARRAY AS ARGUMENT INTO THE FUNCTIONS AT THE BOTOM OF THE DOCUMENT TO POPULATE THE TABLES
-console.log(notes);
 
 async function populateProfileTable(dataArr) {
   for (let i = 0; i < dataArr.length; i++) {
@@ -79,9 +78,9 @@ async function populateTopicTable(dataArr) {
 }
 
 // populateProfileTable(profile);
-populateNotesTable(notes);
-populateHelpTable(help);
+// populateNotesTable(notes);
+// populateHelpTable(help);
 // populateResourceTable(resource);
-// populateTopicTable(topic);
+populateTopicTable(topic);
 
 // populateNotesTableFIX(notes);

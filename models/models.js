@@ -1,4 +1,4 @@
-import pool from "../db/index.js";
+import pool from '../db/index.js';
 
 export async function getProfiles() {
   const res = await pool.query(`SELECT * FROM profile;`);
@@ -54,9 +54,15 @@ export async function getHelpByHelpID(id) {
 }
 
 export async function getHelpByTopic(topic) {
-  const res = await pool.query(
-    `SELECT profile.slackUsername FROM help JOIN topic on help.topicID = topic.topicID join profile on profile.userID=help.userID WHERE topic.topic = $1;`,
+  console.log(topic);
+  const res1 = await pool.query(
+    `Select topicID from topic as t where lower(t.topic)=$1 ;`,
     [topic]
+  );
+  let result = res1.rows[0];
+  const res = await pool.query(
+    `SELECT profile.slackUsername FROM profile join help on profile.userID=help.userID where topicID = $1;`,
+    [result.topicid]
   );
   return res.rows;
 }
@@ -143,12 +149,12 @@ export async function updateProfileByUserEmail(email, username) {
   return res.rows;
 }
 export async function makeNote(email, body) {
-  const idres = await pool.query("Select userID from profile where email=$1", [
+  const idres = await pool.query('Select userID from profile where email=$1', [
     email,
   ]);
   let id = idres.rows[0].userid;
   const res = await pool.query(
-    "INSERT into notes (userID,week,day,tags,note) VALUES ($1,$2,$3,$4,$5)",
+    'INSERT into notes (userID,week,day,tags,note) VALUES ($1,$2,$3,$4,$5)',
     [id, body.week, body.day, body.tags, body.note]
   );
 
@@ -171,7 +177,7 @@ export async function deleteProfileByUserId(id) {
 }
 
 export async function createResource(newResource) {
-  console.log("create resource called", newResource);
+  console.log('create resource called', newResource);
   const res = await pool.query(
     `INSERT INTO resource (userID, topicID, tags, link, rating) VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
     [
