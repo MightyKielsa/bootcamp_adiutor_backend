@@ -60,6 +60,9 @@ export async function getHelpByTopic(topic) {
     [topic]
   );
   let result = res1.rows[0];
+  if (result.topicid === undefined) {
+    result.topicid = '1';
+  }
   const res = await pool.query(
     `SELECT profile.slackUsername FROM profile join help on profile.userID=help.userID where topicID = $1;`,
     [result.topicid]
