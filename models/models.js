@@ -24,7 +24,7 @@ export async function getNotes() {
 
 export async function getNotesbyEmail(email) {
   const res = await pool.query(
-    `SELECT slackUsername, week, day, tags, note from notes join profile on notes.userID=profile.userID where email=$1;`,
+    `SELECT slackUsername, week, day, tags, note from notes join profile on notes.userID=profile.userID where email=$1 order by week asc, day asc;`,
     [email]
   );
   return res.rows;
