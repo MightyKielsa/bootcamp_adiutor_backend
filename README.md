@@ -17,7 +17,7 @@ Resources feature:
 
 ## Installation and Setup Instructions
 
-To get the full experience of the app on your computer, first go to [w9_backend-project-chris-angels](https://github.com/SchoolOfCode/w9_backend-project-chris-angels) and follow installation instructions there to set up your server and database.
+To get the full experience of the app on your computer after starting the backend, visit [w9_frontend-project-chris-angels](https://github.com/SchoolOfCode/w9_frontend-project-chris-angels) and follow installation instructions there to set up the frontend react-app.
 
 Clone down this repository. You will need node and npm installed globally on your machine.
 
