@@ -63,30 +63,30 @@ We decided to use React due to it's flexibility as well as becasue it was the fr
 1. After creating your Heroku profile, go to the upper right corner and click "New". 
 
 <img src="https://user-images.githubusercontent.com/104023970/176413067-04db2da7-1340-4abc-9482-1204f638df25.png" width="800" height="auto">
-______________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________
 
 2. From the dropdown list select "Create New App".
 
 <img src="https://user-images.githubusercontent.com/104023970/176413076-d7e2b0d3-bc72-4796-80fc-54b65cf281f8.png" width="300" height="auto">
-______________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________
 
 3. Type in a name for your databse (1) and select the region you're based in and then click "Create App".
 
 <img src="https://user-images.githubusercontent.com/104023970/176413080-62b3fa1a-6f25-4e34-b7d4-69b9fb22583a.png" width="500" height="auto">
-______________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________
 
 4. Now go to the "Resources" tab (1) and in the "Add ons" section search for Heroku Postgress (2), then click "Submit Order Form" in the pop-up window. 
 
 <img src="https://user-images.githubusercontent.com/104023970/176416317-f53451bd-c2b6-4ad8-9aeb-50b1fc78166c.png" width="700" height="auto">
-______________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________
 
 5. This should set up your database, now you can go to settings of the app and click "view credentials" (Host, database, user, port and password).
 
 <img src="https://user-images.githubusercontent.com/104023970/176417608-5d89cd9a-abe9-4d71-ad70-b607452a64e8.png" width="800" height="auto">
-______________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________
 
 6. In the cloned repository create a .env file in the main folder.
-______________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________
 
 7. In the file prepare variables as follows and fill them with coresponding credentials from the app: 
   
@@ -99,7 +99,7 @@ PGPORT=xxxx
 PGPASSWORD=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 PGDATABASE=xxxxxxxxxxx
-______________________________________________________________________________________________________________________________________________
+______________________________________________________________________________________________________________________
 
 8.You're all set up to use the server and the databse! To load mock data to your databse use following commands in the console in the folder of the app:
 
