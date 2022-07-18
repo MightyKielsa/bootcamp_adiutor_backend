@@ -2,6 +2,9 @@
 
 The backend folder for Bootcamp Adiutor, a centralised database for bootcampers to take notes, share resources, and receive help with a built in debugging tool. Built with JavaScript, Node.js and postgress. Tested with supertest and postman.
 
+## Live Link
+[here](https://frabjous-bonbon-a6e839.netlify.app/)
+
 ## Project Status
 This project is currently in development. The database currently has 5 tables containing user profile information, resources, notes, topics and a table connecting users that expressed that they're happy to help with a certain topic with the topic itself.
 
